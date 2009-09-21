@@ -1,0 +1,3 @@
+#!/bin/sh
+
+ack --color-match='bold red' --color-filename='underline green' $@

@@ -1,0 +1,37 @@
+function parse_vc_branch {
+	parse_git_branch || parse_svn_branch
+}
+
+function parse_git_branch {
+  ref=$(git symbolic-ref HEAD 2> /dev/null) || return
+  echo " ("${ref#refs/heads/}$(num_git_commits_ahead)")"
+}
+
+function parse_svn_branch {
+	ref=$(svn info 2> /dev/null) || return
+	num_changed=$(svn st | wc -l)
+	if [ $num_changed -eq 1 ]; then
+		echo " ("$(echo $num_changed | sed -e 's/\s*//')" changed file)"
+	elif [ $num_changed -eq 0 ]; then
+		echo " (clean)"
+	else
+		echo " ("$num_changed" changed files)"
+	fi
+	# if [ $num_changed -ne 1 ]; then
+	# 	printf "s "
+	# fi
+	# echo ") "
+}
+
+function num_git_commits_ahead {
+    num=$(git status 2> /dev/null | grep "Your branch is ahead of" | awk '{split($0,a," "); print a[9];}' 2> /dev/null) || return
+    if [[ "$num" != "" ]]; then
+  echo "+$num"
+    fi
+}
+
+RED="\[\033[0;31m\]"
+YELLOW="\[\033[0;33m\]"
+GREEN="\[\033[0;32m\]"
+WHITE="\[\033[0;37m\]"
+PS1="$GREEN\w$YELLOW\$(parse_vc_branch) $GREEN\$ $WHITE"
