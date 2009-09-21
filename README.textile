@@ -14,6 +14,8 @@ h2. parse_vc_branch
 A custom shell prompt that will provide information about the status of a local 
 Git or SVN repository relative to the remote HEAD.
 
+The code for git output is from Thomas Mayfield (http://github.com/thegreatape/dot-files)
+
 Example output:
 
 h3. Git:
