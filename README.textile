@@ -1,6 +1,6 @@
 h1. Mikowitz's Toolbox
 
-Based on an idea by John Trupiano (http://www.github.com/jtrupiano/johns-toolbox), 
+Based on an idea by John Trupiano ("linktext":http://www.github.com/jtrupiano/johns-toolbox), 
 this is a (currently very) small repository of some custom scripts that I use with
 some degree of regularity.
 
@@ -14,7 +14,7 @@ h2. parse_vc_branch
 A custom shell prompt that will provide information about the status of a local 
 Git or SVN repository relative to the remote HEAD.
 
-The code for git output is from Thomas Mayfield (http://github.com/thegreatape/dot-files)
+The code for git output is from Thomas Mayfield ("linktext":http://github.com/thegreatape/dot-files)
 
 Example output:
 
