@@ -13,8 +13,6 @@ A custom shell prompt that will provide information about the status of a local 
 
 The code for git output is from "Thomas Mayfield":http://github.com/thegreatape/dot-files.
 
-h3. Example output:
-
 h4. Git:
 
 In a clean working directory
@@ -39,3 +37,11 @@ include the line <code>source /path/to/parse_vc_branch</code> in your .bashrc, e
 h2. svnroot
 
 Returns you to the root directory of your current SVN project.
+
+h2. svnst
+
+Runs <code>ack $1</code> on <code>svn st</code> results.
+
+h4. For example
+
+Running <code>$ svnst C</code> returns a list of all conflicted files in your current SVN directory.

@@ -29,14 +29,20 @@ function parse_svn_branch {
 	depth=`ruby -e "puts '${root}'.split('/').size - 1"`
 	ref=$(svn info 2> /dev/null) || return
 	num_changed=$(svn st $root | wc -l)
+	num_con=$(svn st $root | ack ^C | wc -l) 
 	num_mod=$(svn st $root | ack ^M | wc -l)
 	num_add=$(svn st $root | ack ^A | wc -l)
 	num_del=$(svn st $root | ack ^D | wc -l)
 	num_new=$(svn st $root | ack "^\?" | wc -l)
+	printf " depth:$depth "
 	if [ $num_changed -eq 0 ]; then
-		echo " depth:$depth (clean)"
+		echo "(clean)"
 	else
-		printf " depth:$depth \e[37m( \e[32m$((num_add)) \e[31m$((num_del)) \e[33m$((num_mod)) \e[36m$((num_new)) \e[37m)"
+		if [ $num_con -gt 0 ]; then
+			printf "\e[31m( $((num_con)) conflicted files)"
+		else
+			printf "\e[37m( \e[32m$((num_add)) \e[31m$((num_del)) \e[33m$((num_mod)) \e[36m$((num_new)) \e[37m)"
+		fi
 	fi
 }
 
