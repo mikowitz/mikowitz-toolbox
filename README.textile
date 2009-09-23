@@ -30,9 +30,12 @@ In a clean working directory
 With 1 added file, 2 deleted files, 3 modified files, and 1 untracked file. In the shell, these numbers are colorized, and show stats relative to the root of the current project, rather than the current subdirectory.
 <code>/path/to/svn/repo depth:0 ( 1 2 3 1 ) $</code>
 
-h3. Usage
+In a directory with 3 conflicted files
+<code>/path/to/svn/repo depth:0 ( 3 conflicted files) $</code>
 
-include the line <code>source /path/to/parse_vc_branch</code> in your .bashrc, etc. file
+h4. Usage:
+
+Add the line <code>source /path/to/parse_vc_branch</code> to your .bashrc, etc. file
 
 h2. svnroot
 
