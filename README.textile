@@ -27,11 +27,15 @@ With one local commit ahead of the remote
 h4. SVN:
 
 In a clean working directory
-<code>/path/to/svn/repo (clean) $</code>
+<code>/path/to/svn/repo depth:0 (clean) $</code>
 
-With 2 modified files
-<code>/path/to/svn/repo (2 changed files) $</code>
+With 1 added file, 2 deleted files, 3 modified files, and 1 untracked file. In the shell, these numbers are colorized, and show stats relative to the root of the current project, rather than the current subdirectory.
+<code>/path/to/svn/repo depth:0 ( 1 2 3 1 ) $</code>
 
 h3. Usage
 
 include the line <code>source /path/to/parse_vc_branch</code> in your .bashrc, etc. file
+
+h2. svnroot
+
+Returns you to the root directory of your current SVN project.

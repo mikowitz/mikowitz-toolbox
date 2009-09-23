@@ -1,7 +1,19 @@
+#!/usr/bin/env bash
+
 RED="\[\033[0;31m\]"
 GREEN="\[\033[0;32m\]"
 YELLOW="\[\033[0;33m\]"
 WHITE="\[\033[0;37m\]"
+
+function find_svn_root {
+	current_pwd="./"
+	is_svn_dir=$(ls -al $current_pwd | ack \.svn | wc -l)
+	while [ $is_svn_dir -eq 1 ]; do
+		current_pwd="${current_pwd}../"
+		is_svn_dir=$(ls -a $current_pwd | ack \.svn | wc -l)
+	done
+	echo "$(echo -e ${current_pwd} | sed 's/...$//')"
+}
 
 function parse_vc_branch {
 	parse_git_branch || parse_svn_branch
@@ -13,16 +25,18 @@ function parse_git_branch {
 }
 
 function parse_svn_branch {
+	root=$(find_svn_root)
+	depth=`ruby -e "puts '${root}'.split('/').size - 1"`
 	ref=$(svn info 2> /dev/null) || return
-	num_changed=$(svn st | wc -l)
-	num_mod=$(svn st | ack ^M | wc -l)
-	num_add=$(svn st | ack ^A | wc -l)
-	num_del=$(svn st | ack ^D | wc -l)
-	num_new=$(svn st | ack "^\?" | wc -l)
+	num_changed=$(svn st $root | wc -l)
+	num_mod=$(svn st $root | ack ^M | wc -l)
+	num_add=$(svn st $root | ack ^A | wc -l)
+	num_del=$(svn st $root | ack ^D | wc -l)
+	num_new=$(svn st $root | ack "^\?" | wc -l)
 	if [ $num_changed -eq 0 ]; then
-		echo " (clean)"
+		echo " depth:$depth (clean)"
 	else
-		printf " \e[37m( \e[32m$((num_add)) \e[31m$((num_del)) \e[33m$((num_mod)) \e[36m$((num_new)) \e[37m)"
+		printf " depth:$depth \e[37m( \e[32m$((num_add)) \e[31m$((num_del)) \e[33m$((num_mod)) \e[36m$((num_new)) \e[37m)"
 	fi
 }
 
