@@ -7,6 +7,18 @@ h2. myack
 My preferred output configuration for ack results. Other ack options can be passed as normal.
 
 
+h2. dbymls
+
+Quickly create database.yml files for the development and test environments in an "environmentalized":http://www.github.com/jtrupiano/environmentalist Rails app.
+
+<code>~$ dbymls my_app</code> 
+
+in the root directory of a rails app will create database.yml files pointing to mysql databases "my_app_dev" and "my_app_test."
+
+<code>~$ dbymls my_app username pass</code> 
+
+will interpret the 2nd and/or 3rd arguments to be the mysql username (and password optionally) you want to access these database as, and will create the databases "my_app_dev" and "my_app_test" in mysql. If only one argument is passed to dbymls, no mysql databases will be created.
+
 h2. parse_vc_branch
 
 A custom shell prompt that will provide information about the status of a local Git or SVN repository relative to the remote HEAD.

@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+{"development" => "dev", "test" => "test"}.each_pair do |env, db_suffix|
+  File.open("#{Dir.pwd}/config/#{env}/database.yml", "w") do |f|
+    f << "---\n#{env}:\n\tadapter: mysql\n\tdatabase: #{ARGV[0]}_#{db_suffix}\n\tusername: root\n"
+  end
+  if ARGV[1]
+    `mysqladmin -u#{ARGV[1]} #{ARGV[2] ? "-p#{ARGV[2]}" : ""} create #{ARGV[0]}_#{db_suffix}`
+  end
+end
